@@ -39,6 +39,7 @@ type Client struct {
 	VMScaleSetVMsClient              *compute.VirtualMachineScaleSetVMsClient
 	VMClient                         *compute.VirtualMachinesClient
 	VMImageClient                    *compute.VirtualMachineImagesClient
+	VMSizeClient                     *compute.VirtualMachineSizesClient
 }
 
 func NewClient(o *common.ClientOptions) *Client {
@@ -123,6 +124,9 @@ func NewClient(o *common.ClientOptions) *Client {
 	vmClient := compute.NewVirtualMachinesClientWithBaseURI(o.ResourceManagerEndpoint, o.SubscriptionId)
 	o.ConfigureClient(&vmClient.Client, o.ResourceManagerAuthorizer)
 
+	vmSizeClient := compute.NewVirtualMachineSizesClientWithBaseURI(o.ResourceManagerEndpoint, o.SubscriptionId)
+	o.ConfigureClient(&vmSizeClient.Client, o.ResourceManagerAuthorizer)
+
 	return &Client{
 		AvailabilitySetsClient:           &availabilitySetsClient,
 		CapacityReservationsClient:       &capacityReservationsClient,
@@ -151,5 +155,6 @@ func NewClient(o *common.ClientOptions) *Client {
 		VMScaleSetVMsClient:              &vmScaleSetVMsClient,
 		VMClient:                         &vmClient,
 		VMImageClient:                    &vmImageClient,
+		VMSizeClient:                     &vmSizeClient,
 	}
 }
